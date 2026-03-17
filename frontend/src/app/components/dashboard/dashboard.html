@@ -1,0 +1,46 @@
+<nav class="navbar">
+  <div class="nav-brand">NEW START</div>
+  <div class="nav-user" *ngIf="user | async as currentUser">
+    <span>Bienvenido, <strong>{{ currentUser.name }}</strong></span>
+    <button (click)="logout()" class="btn-logout">Cerrar Sesión</button>
+  </div>
+</nav>
+
+<div class="dashboard-container">
+  <header class="hero">
+    <h1>Panel de Control</h1>
+    <p>Gestiona tu proceso de reubicación y descubre nuestros servicios.</p>
+  </header>
+
+  <section class="services-section">
+    <h2>Servicios Disponibles</h2>
+    <div class="grid">
+      @for (service of services(); track service.id) {
+        <div class="service-card">
+          <span class="category">{{ service.category }}</span>
+          <h3>{{ service.name }}</h3>
+          <p>{{ service.description }}</p>
+          <button class="btn-action">Contratar</button>
+        </div>
+      }
+    </div>
+  </section>
+
+  <section class="plans-section">
+    <h2>Planes de Apoyo</h2>
+    <div class="plans-grid">
+      @for (plan of plans(); track plan.id) {
+        <div class="plan-card" [class.featured]="plan.name === 'Platinum'">
+          <h3>{{ plan.name }}</h3>
+          <div class="price">{{ plan.price }}€<span>/mes</span></div>
+          <ul class="features">
+            @for (feature of plan.features; track $index) {
+              <li>{{ feature }}</li>
+            }
+          </ul>
+          <button class="btn-plan">Seleccionar Plan</button>
+        </div>
+      }
+    </div>
+  </section>
+</div>

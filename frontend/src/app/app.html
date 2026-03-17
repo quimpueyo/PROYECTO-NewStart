@@ -1,0 +1,248 @@
+<style>
+  :host {
+    --primary: #2a52be;
+    --secondary: #f4f7fe;
+    --accent: #ff41f8;
+    --text: #1a1a1a;
+    --gray-light: #f0f2f5;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+
+  header {
+    text-align: center;
+    margin-bottom: 4rem;
+    padding: 3rem 0;
+    background: linear-gradient(135deg, var(--primary), #1e3a8a);
+    color: white;
+    border-radius: 1rem;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  }
+
+  header h1 {
+    font-size: 3.5rem;
+    margin: 0;
+    letter-spacing: -2px;
+  }
+
+  header p {
+    font-size: 1.2rem;
+    opacity: 0.9;
+  }
+
+  section {
+    margin-bottom: 5rem;
+  }
+
+  h2 {
+    font-size: 2.2rem;
+    margin-bottom: 2rem;
+    position: relative;
+    display: inline-block;
+  }
+
+  h2::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    width: 60%;
+    height: 4px;
+    background: var(--accent);
+    border-radius: 2px;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+  }
+
+  .card {
+    background: white;
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid var(--gray-light);
+  }
+
+  .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 20px rgba(0,0,0,0.1);
+  }
+
+  .card i {
+    font-size: 2.5rem;
+    color: var(--primary);
+    margin-bottom: 1.5rem;
+    display: block;
+  }
+
+  .card h3 {
+    margin: 0 0 1rem 0;
+    font-size: 1.5rem;
+    color: var(--primary);
+  }
+
+  .card p {
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+  }
+
+  .category-pill {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    background: var(--secondary);
+    color: var(--primary);
+    border-radius: 2rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+
+  .plans-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+  }
+
+  .plan-card {
+    background: white;
+    padding: 3rem 2rem;
+    border-radius: 1.5rem;
+    text-align: center;
+    border: 2px solid var(--gray-light);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .plan-card.featured {
+    border-color: var(--primary);
+    transform: scale(1.05);
+    z-index: 1;
+  }
+
+  .plan-card h3 {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+  }
+
+  .price {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-bottom: 2rem;
+    color: var(--primary);
+  }
+
+  .price span {
+    font-size: 1rem;
+    font-weight: 400;
+    color: #888;
+  }
+
+  .features-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 2.5rem 0;
+    text-align: left;
+  }
+
+  .features-list li {
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--gray-light);
+    display: flex;
+    align-items: center;
+  }
+
+  .features-list li::before {
+    content: '✓';
+    color: #10b981;
+    margin-right: 0.75rem;
+    font-weight: bold;
+  }
+
+  .btn {
+    display: inline-block;
+    padding: 1rem 2rem;
+    background: var(--primary);
+    color: white;
+    text-decoration: none;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    transition: background 0.3s ease;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+  }
+
+  .btn:hover {
+    background: #1e3a8a;
+  }
+
+  .empty-state {
+    text-align: center;
+    padding: 3rem;
+    background: var(--secondary);
+    border-radius: 1rem;
+    grid-column: 1 / -1;
+  }
+</style>
+
+<div class="container">
+  <header>
+    <h1>{{ title() }}</h1>
+    <p>Tu nueva vida comienza aquí. Servicios profesionales para tu reubicación.</p>
+  </header>
+
+  <section id="services">
+    <h2>Nuestros Servicios</h2>
+    <div class="grid">
+      @if (services().length > 0) {
+        @for (service of services(); track service.id) {
+          <div class="card">
+            <span class="category-pill">{{ service.category }}</span>
+            <h3>{{ service.name }}</h3>
+            <p>{{ service.description }}</p>
+            <button class="btn">Más información</button>
+          </div>
+        }
+      } @else {
+        <div class="empty-state">
+          <p>Cargando servicios desde el backend...</p>
+        </div>
+      }
+    </div>
+  </section>
+
+  <section id="plans">
+    <h2>Planes de Apoyo</h2>
+    <div class="plans-grid">
+      @if (plans().length > 0) {
+        @for (plan of plans(); track plan.id) {
+          <div class="plan-card" [class.featured]="plan.name === 'Premium'">
+            <h3>{{ plan.name }}</h3>
+            <div class="price">{{ plan.price }}€<span>/mes</span></div>
+            <ul class="features-list">
+              @for (feature of plan.features; track $index) {
+                <li>{{ feature }}</li>
+              }
+            </ul>
+            <button class="btn">Suscribirse</button>
+          </div>
+        }
+      } @else {
+        <div class="empty-state">
+          <p>Cargando planes desde el backend...</p>
+        </div>
+      }
+    </div>
+  </section>
+</div>
+
+<router-outlet />
