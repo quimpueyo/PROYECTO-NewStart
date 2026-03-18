@@ -1,0 +1,22 @@
+<nav class="navbar">
+  <div class="nav-container">
+    <div class="nav-brand" routerLink="/dashboard">NEW START</div>
+    
+    <div class="nav-links">
+      <a routerLink="/dashboard" routerLinkActive="active">Panel</a>
+      <a routerLink="/perfil" routerLinkActive="active" *ngIf="user | async">Perfil</a>
+    </div>
+
+    <div class="nav-auth" *ngIf="user | async as currentUser; else guest">
+      <span class="user-name">Hola, {{ currentUser.name }}</span>
+      <button class="btn-logout" (click)="logout()">Salir</button>
+    </div>
+
+    <ng-template #guest>
+      <div class="nav-auth">
+        <a routerLink="/login" class="link-auth">Login</a>
+        <a routerLink="/register" class="btn-signup">Registro</a>
+      </div>
+    </ng-template>
+  </div>
+</nav>

@@ -1,28 +1,17 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../environments/environment';
 
-export interface Service {
-  id: number;
-  name: string;
-  description: string;
-  icon: string;
-  category: string;
-}
-
-export interface Plan {
-  id: number;
-  name: string;
-  price: number;
-  features: string[];
-}
+import { Service } from '../models/service';
+import { Plan } from '../models/plan';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
   private http = inject(HttpClient);
-  private apiUrl = 'http://localhost:8000/api';
+  private apiUrl = environment.apiUrl;
 
   getServices(): Observable<Service[]> {
     return this.http.get<Service[]>(`${this.apiUrl}/services`);

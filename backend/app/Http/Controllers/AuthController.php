@@ -39,9 +39,15 @@ class AuthController extends Controller
             'role' => $role,
         ]);
 
+        // Generar token para autologin
+        $token = JWTAuth::fromUser($user);
+
         return response()->json([
             'message' => 'Usuario registrado con éxito',
-            'user' => $user
+            'user' => $user,
+            'access_token' => $token,
+            'token_type' => 'bearer',
+            'expires_in' => auth('api')->factory()->getTTL() * 60,
         ], 201);
     }
 

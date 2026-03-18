@@ -3,15 +3,15 @@
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background: linear-gradient(135deg, #2a52be, #1e3a8a);
-  padding: 1rem;
+  background-color: var(--bg-color);
+  padding: 1.5rem;
 }
 
 .register-card {
-  background: white;
-  padding: 3rem;
-  border-radius: 1.5rem;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+  background: var(--card-bg);
+  padding: 2.5rem;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-md);
   width: 100%;
   max-width: 500px;
 }
@@ -22,15 +22,14 @@
 }
 
 .logo h1 {
-  font-size: 2.5rem;
-  color: #2a52be;
-  margin: 0;
-  letter-spacing: -1px;
+  font-size: 2rem;
+  color: var(--primary-color);
+  font-weight: 700;
 }
 
 .logo p {
-  color: #666;
-  margin-top: 0.5rem;
+  color: var(--text-muted);
+  font-size: 0.9rem;
 }
 
 .form-row {
@@ -46,56 +45,64 @@
 .form-group label {
   display: block;
   margin-bottom: 0.4rem;
-  font-weight: 600;
-  color: #444;
+  padding-left: 2px;
+  font-weight: 500;
+  font-size: 0.85rem;
+  color: var(--text-color);
 }
 
 .form-group input {
   width: 100%;
-  padding: 0.75rem 1rem;
-  border: 2px solid #eee;
-  border-radius: 0.75rem;
+  padding: 0.8rem 1rem;
+  border: 1px solid #E0E0E0;
+  border-radius: 8px;
   font-size: 1rem;
+  background: #F9FAFB;
+  transition: all 0.2s;
 }
 
 .form-group input:focus {
   outline: none;
-  border-color: #2a52be;
+  border-color: var(--secondary-color);
+  background: #FFF;
+  box-shadow: 0 0 0 4px var(--accent-color);
 }
 
 .error-message {
-  background: #fee2e2;
-  color: #dc2626;
-  padding: 0.75rem;
-  border-radius: 0.5rem;
-  margin-bottom: 1.5rem;
+  color: var(--error-color);
+  font-size: 0.85rem;
+  margin-bottom: 1rem;
   text-align: center;
 }
 
 .btn-register {
   width: 100%;
-  padding: 1rem;
-  background: #2a52be;
+  padding: 0.9rem;
+  background-color: var(--primary-color);
   color: white;
-  border: none;
-  border-radius: 0.75rem;
-  font-size: 1.1rem;
+  border-radius: 8px;
+  font-size: 1rem;
   font-weight: 600;
-  cursor: pointer;
-  transition: background 0.3s;
+  margin-top: 1rem;
 }
 
 .btn-register:hover:not(:disabled) {
-  background: #1e3a8a;
+  background-color: #0d124b;
+}
+
+.btn-register:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 .footer {
   margin-top: 1.5rem;
   text-align: center;
+  font-size: 0.9rem;
+  color: var(--text-muted);
 }
 
 .footer a {
-  color: #2a52be;
-  text-decoration: none;
+  color: var(--secondary-color);
   font-weight: 600;
 }

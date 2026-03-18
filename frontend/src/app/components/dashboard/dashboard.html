@@ -1,33 +1,33 @@
-<nav class="navbar">
-  <div class="nav-brand">NEW START</div>
-  <div class="nav-user" *ngIf="user | async as currentUser">
-    <span>Bienvenido, <strong>{{ currentUser.name }}</strong></span>
-    <button (click)="logout()" class="btn-logout">Cerrar Sesión</button>
-  </div>
-</nav>
+<app-navbar></app-navbar>
 
 <div class="dashboard-container">
   <header class="hero">
     <h1>Panel de Control</h1>
-    <p>Gestiona tu proceso de reubicación y descubre nuestros servicios.</p>
+    <p>Bienvenido de nuevo. Aquí tienes un resumen de tus servicios y planes disponibles.</p>
   </header>
 
   <section class="services-section">
-    <h2>Servicios Disponibles</h2>
+    <h2>
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      Servicios Médicos y Reubicación
+    </h2>
     <div class="grid">
       @for (service of services(); track service.id) {
         <div class="service-card">
           <span class="category">{{ service.category }}</span>
           <h3>{{ service.name }}</h3>
           <p>{{ service.description }}</p>
-          <button class="btn-action">Contratar</button>
+          <button class="btn-action">Solicitar Información</button>
         </div>
       }
     </div>
   </section>
 
   <section class="plans-section">
-    <h2>Planes de Apoyo</h2>
+    <h2>
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      Planes de Seguimiento
+    </h2>
     <div class="plans-grid">
       @for (plan of plans(); track plan.id) {
         <div class="plan-card" [class.featured]="plan.name === 'Platinum'">
@@ -38,7 +38,7 @@
               <li>{{ feature }}</li>
             }
           </ul>
-          <button class="btn-plan">Seleccionar Plan</button>
+          <button class="btn-plan">Elegir este Plan</button>
         </div>
       }
     </div>

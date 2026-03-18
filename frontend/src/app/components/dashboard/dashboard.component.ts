@@ -2,12 +2,15 @@ import { Component, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
-import { ApiService, Service, Plan } from '../../services/api.service';
+import { ApiService } from '../../services/api.service';
+import { Service } from '../../models/service';
+import { Plan } from '../../models/plan';
+import { NavbarComponent } from '../navbar/navbar.component';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, NavbarComponent],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css'
 })
@@ -21,8 +24,8 @@ export class DashboardComponent implements OnInit {
   plans = signal<Plan[]>([]);
 
   ngOnInit() {
-    this.apiService.getServices().subscribe(data => this.services.set(data));
-    this.apiService.getPlans().subscribe(data => this.plans.set(data));
+    this.apiService.getServices().subscribe((data: Service[]) => this.services.set(data));
+    this.apiService.getPlans().subscribe((data: Plan[]) => this.plans.set(data));
   }
 
   logout() {

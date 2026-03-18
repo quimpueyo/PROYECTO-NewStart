@@ -1,0 +1,24 @@
+<app-navbar></app-navbar>
+
+<div class="perfil-container container">
+  <div class="profile-card" *ngIf="user | async as currentUser">
+    <div class="profile-header">
+      <div class="avatar">{{ currentUser.name[0] }}{{ currentUser.lastname ? currentUser.lastname[0] : '' }}</div>
+      <h2>{{ currentUser.name }} {{ currentUser.lastname }}</h2>
+      <p class="role">{{ currentUser.role }}</p>
+    </div>
+
+    <div class="profile-details">
+      <div class="detail-item">
+        <label>Email</label>
+        <span>{{ currentUser.email }}</span>
+      </div>
+      <div class="detail-item" *ngIf="currentUser.destination_country">
+        <label>País de Destino</label>
+        <span>{{ currentUser.destination_country }}</span>
+      </div>
+    </div>
+
+    <button class="btn-edit">Editar Perfil</button>
+  </div>
+</div>
