@@ -1,48 +1,70 @@
-<div class="register-container">
-  <div class="register-card">
-    <div class="logo">
-      <h1>NEW START</h1>
-      <p>Crea tu cuenta gratuita</p>
+<div class="auth-wrapper">
+  <div class="auth-container split">
+    <!-- Image Side -->
+    <div class="auth-image signup">
+      <div class="overlay"></div>
+      <div class="image-content">
+        <h2>Únete a nuestra comunidad.</h2>
+        <p>Expertos en reubicación y servicios médicos internacionales a tu alcance.</p>
+      </div>
     </div>
 
-    <form (ngSubmit)="onSubmit()" #registerForm="ngForm">
-      <div class="form-row">
-        <div class="form-group">
-          <label for="name">Nombre</label>
-          <input type="text" id="name" name="name" [(ngModel)]="userData.name" required placeholder="Nombre">
+    <!-- Form Side -->
+    <div class="auth-form-side scrollable">
+      <div class="form-header">
+        <div class="logo-mark" style="margin: 0 auto 15px;">
+          <!-- Exact Replica SVG: Original Colors (Black, Steel Blue, White) -->
+          <svg width="45" height="45" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="50" cy="50" r="48" fill="#000000"/>
+            <circle cx="50" cy="50" r="32" fill="#4a6fa5"/>
+            <path d="M18 50 C18 60, 82 60, 82 50 C82 40, 18 40, 18 50" fill="none" stroke="white" stroke-width="2" transform="rotate(-15, 50, 50)"/>
+            <g transform="translate(68, 38) rotate(30)">
+              <path d="M0 0 L15 5 L0 10 L3 5 Z" fill="white"/>
+              <path d="M5 5 L-5 2 L-3 5 L-5 8 Z" fill="white"/>
+            </g>
+          </svg>
         </div>
-        <div class="form-group">
-          <label for="lastname">Apellidos</label>
-          <input type="text" id="lastname" name="lastname" [(ngModel)]="userData.lastname" required placeholder="Apellidos">
+        <h1>Crea tu cuenta</h1>
+        <p>Empieza tu proceso hoy mismo</p>
+      </div>
+
+      <form (ngSubmit)="onSubmit()" class="register-form">
+        <div class="form-row">
+          <div class="form-group half">
+            <label>Nombre</label>
+            <input type="text" name="name" [(ngModel)]="userData.name" placeholder="Tu nombre" required>
+          </div>
+          <div class="form-group half">
+            <label>Apellidos</label>
+            <input type="text" name="lastname" [(ngModel)]="userData.lastname" placeholder="Apellidos" required>
+          </div>
         </div>
-      </div>
 
-      <div class="form-group">
-        <label for="email">Email</label>
-        <input type="email" id="email" name="email" [(ngModel)]="userData.email" required placeholder="tu@email.com">
-      </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" name="email" [(ngModel)]="userData.email" placeholder="example@mail.com" required>
+        </div>
 
-      <div class="form-group">
-        <label for="password">Contraseña</label>
-        <input type="password" id="password" name="password" [(ngModel)]="userData.password" required minlength="6" placeholder="Mín. 6 caracteres">
-      </div>
+        <div class="form-group">
+          <label>País de Destino (Opcional)</label>
+          <input type="text" name="destination_country" [(ngModel)]="userData.destination_country" placeholder="Ej: Alemania">
+        </div>
 
-      <div class="form-group">
-        <label for="destination">País de destino (Opcional)</label>
-        <input type="text" id="destination" name="destination" [(ngModel)]="userData.destination_country" placeholder="¿A dónde vas?">
-      </div>
+        <div class="form-group">
+          <label>Contraseña</label>
+          <input type="password" name="password" [(ngModel)]="userData.password" placeholder="Mín. 6 caracteres" required>
+        </div>
 
-      <div *ngIf="error" class="error-message">
-        {{ error }}
-      </div>
+        <div class="error-msg" *ngIf="error">
+          {{ error }}
+        </div>
 
-      <button type="submit" class="btn-register" [disabled]="!registerForm.form.valid">
-        Registrarse
-      </button>
-    </form>
+        <button type="submit" class="btn-auth">Registrarse</button>
 
-    <div class="footer">
-      <p>¿Ya tienes cuenta? <a routerLink="/login">Inicia sesión</a></p>
+        <p class="switch-auth">
+          ¿Ya tienes cuenta? <a routerLink="/login">Inicia sesión</a>
+        </p>
+      </form>
     </div>
   </div>
 </div>

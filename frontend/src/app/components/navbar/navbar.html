@@ -1,21 +1,47 @@
-<nav class="navbar">
+<nav class="navbar landing-nav">
   <div class="nav-container">
-    <div class="nav-brand" routerLink="/dashboard">NEW START</div>
+    <div class="nav-brand logo-brand" routerLink="/">
+      <div class="logo-mark">
+        <!-- Exact Badge Replica: Integrated Text, Globe & Plane -->
+        <svg width="60" height="60" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="50" cy="50" r="48" fill="#000000"/>
+          <circle cx="50" cy="50" r="32" fill="#4a6fa5"/>
+          <path d="M15 50 C15 65, 85 65, 85 50 C85 35, 30 35, 15 50 Z" fill="none" stroke="white" stroke-width="3.5" stroke-linecap="round" transform="rotate(-12, 50, 50)"/>
+          <g transform="translate(68, 32) rotate(35)">
+            <path d="M0 0 L18 8 L0 16 L4 8 Z" fill="white"/>
+            <path d="M6 8 L-6 4 L-4 8 L-6 12 Z" fill="white"/>
+          </g>
+          <defs>
+            <path id="topCurve" d="M 22,50 A 28,28 0 1,1 78,50" />
+            <path id="bottomCurve" d="M 22,50 A 28,28 0 0,0 78,50" />
+          </defs>
+          <text fill="white" font-size="7" font-weight="bold" letter-spacing="1">
+            <textPath href="#topCurve" startOffset="50%" text-anchor="middle">TRIP N' JOY</textPath>
+          </text>
+          <text fill="white" font-size="5" font-weight="600" letter-spacing="1">
+            <textPath href="#bottomCurve" startOffset="50%" text-anchor="middle" side="right">VIVE GRANDES EXPERIENCIAS</textPath>
+          </text>
+        </svg>
+      </div>
+    </div>
     
-    <div class="nav-links">
-      <a routerLink="/dashboard" routerLinkActive="active">Panel</a>
-      <a routerLink="/perfil" routerLinkActive="active" *ngIf="user | async">Perfil</a>
+    <div class="nav-links-center">
+      <a routerLink="/" fragment="servicios">¿QUÉ OFRECEMOS?</a>
+      <a routerLink="/" fragment="valoraciones">VALORACIONES</a>
     </div>
 
-    <div class="nav-auth" *ngIf="user | async as currentUser; else guest">
-      <span class="user-name">Hola, {{ currentUser.name }}</span>
-      <button class="btn-logout" (click)="logout()">Salir</button>
+    <div class="nav-auth" *ngIf="!(user | async); else loggedIn">
+      <a routerLink="/login" class="btn-join">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+        ÚNETE
+      </a>
     </div>
 
-    <ng-template #guest>
-      <div class="nav-auth">
-        <a routerLink="/login" class="link-auth">Login</a>
-        <a routerLink="/register" class="btn-signup">Registro</a>
+    <ng-template #loggedIn>
+      <div class="nav-auth user-menu">
+        <a routerLink="/dashboard" class="nav-user-item">Panel</a>
+        <a routerLink="/perfil" class="nav-user-item">Perfil</a>
+        <button (click)="logout()" class="btn-logout">Salir</button>
       </div>
     </ng-template>
   </div>

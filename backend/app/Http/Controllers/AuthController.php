@@ -114,17 +114,27 @@ class AuthController extends Controller
         }
 
         $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
-            'lastname' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users,email,'.$user->id, 
-            'password' => 'nullable|string|min:6',
-            'destination_country' => 'nullable|string|max:255',
+            'name'               => 'required|string|max:255',
+            'lastname'           => 'nullable|string|max:255',
+            'email'              => 'required|string|email|max:255|unique:users,email,'.$user->id,
+            'password'           => 'nullable|string|min:6',
+            'destination_country'=> 'nullable|string|max:255',
+            'phone'              => 'nullable|string|max:50',
+            'date_of_birth'      => 'nullable|date',
+            'passport_number'    => 'nullable|string|max:50',
+            'nationality'        => 'nullable|string|max:100',
+            'emergency_contact'  => 'nullable|string|max:255',
         ]);
 
-        $user->name = $validatedData['name'];
-        $user->lastname = $validatedData['lastname'];
-        $user->email = $validatedData['email'];
-        $user->destination_country = $validatedData['destination_country'] ?? $user->destination_country;
+        $user->name               = $validatedData['name'];
+        $user->lastname           = $validatedData['lastname'] ?? $user->lastname;
+        $user->email              = $validatedData['email'];
+        $user->destination_country= $validatedData['destination_country'] ?? $user->destination_country;
+        $user->phone              = $validatedData['phone'] ?? $user->phone;
+        $user->date_of_birth      = $validatedData['date_of_birth'] ?? $user->date_of_birth;
+        $user->passport_number    = $validatedData['passport_number'] ?? $user->passport_number;
+        $user->nationality        = $validatedData['nationality'] ?? $user->nationality;
+        $user->emergency_contact  = $validatedData['emergency_contact'] ?? $user->emergency_contact;
 
         if (!empty($validatedData['password'])) {
             $user->password = Hash::make($validatedData['password']);

@@ -1,17 +1,15 @@
 :root {
-  --primary-color: #1A237E;
-  --secondary-color: #2196F3;
-  --accent-color: #E3F2FD;
-  --text-color: #333333;
-  --text-muted: #666666;
-  --bg-color: #F5F5F7;
-  --card-bg: #FFFFFF;
-  --success-color: #4CAF50;
-  --error-color: #F44336;
+  --primary-color: #1a1a1a; /* Dark Slate Black */
+  --secondary-color: #4a6fa5; /* Steel Blue from Globe Logo */
+  --accent-color: #f4f7fa;
+  --text-color: #1a1a1a;
+  --text-muted: #4b5563;
+  --bg-color: #ffffff;
+  --card-bg: #ffffff;
+  --shadow-sm: 0 4px 6px rgba(0,0,0,0.05);
+  --shadow-md: 0 10px 25px rgba(0,0,0,0.08);
   --border-radius: 12px;
-  --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
-  --shadow-md: 0 4px 12px rgba(0,0,0,0.1);
-  --font-main: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-main: 'Inter', -apple-system, system-ui, sans-serif;
 }
 
 * {
@@ -21,6 +19,8 @@
 }
 
 body {
+  margin: 0;
+  padding: 0;
   font-family: var(--font-main);
   background-color: var(--bg-color);
   color: var(--text-color);
@@ -38,6 +38,42 @@ button {
   outline: none;
   font-family: inherit;
   transition: all 0.2s ease;
+}
+
+/* Global Logo Styles */
+.logo-mark {
+  width: 55px;
+  height: 55px;
+  background: #000; /* Black Badge as in image */
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  transition: transform 0.3s;
+  overflow: visible;
+}
+
+.logo-mark:hover {
+  transform: scale(1.1);
+}
+
+.logo-brand {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  cursor: pointer;
+}
+
+.logo-text-nav {
+  font-size: 1.4rem;
+  font-weight: 900;
+  letter-spacing: 1px;
+  color: var(--primary-color);
+}
+
+.joy-text {
+  color: var(--secondary-color);
 }
 
 .container {

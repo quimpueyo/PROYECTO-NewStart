@@ -19,6 +19,14 @@ return new class extends Migration {
             $table->string('password');
             $table->string('role')->default('user');
             $table->string('destination_country')->nullable();
+            
+            // Travel-specific profile fields
+            $table->string('phone')->nullable();
+            $table->date('date_of_birth')->nullable();
+            $table->string('passport_number')->nullable();
+            $table->string('nationality')->nullable();
+            $table->string('emergency_contact')->nullable();
+
             $table->foreignId('plan_id')->nullable()->constrained('plans')->onDelete('set null');
             $table->rememberToken();
             $table->timestamps();

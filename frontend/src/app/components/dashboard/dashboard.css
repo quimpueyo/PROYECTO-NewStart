@@ -5,24 +5,27 @@
 }
 
 .hero {
-  background-color: var(--card-bg);
-  padding: 3rem 2rem;
+  background-image: linear-gradient(rgba(7, 30, 71, 0.7), rgba(7, 30, 71, 0.7)), url('https://images.unsplash.com/photo-1454165833767-027ffea9e77b?auto=format&fit=crop&w=1500&q=80'); /* REAL CORPORATE PHOTO */
+  background-size: cover;
+  background-position: center;
+  padding: 5rem 2rem;
   border-radius: var(--border-radius);
   margin-bottom: 3rem;
-  box-shadow: var(--shadow-sm);
+  box-shadow: var(--shadow-md);
   text-align: center;
+  color: white;
 }
 
 .hero h1 {
-  font-size: 2.5rem;
-  color: var(--primary-color);
+  font-size: 2.8rem;
+  color: var(--secondary-color); /* Gold accent */
   font-weight: 800;
   margin-bottom: 0.5rem;
 }
 
 .hero p {
-  color: var(--text-muted);
-  font-size: 1.1rem;
+  color: rgba(255,255,255,0.9);
+  font-size: 1.2rem;
 }
 
 section {

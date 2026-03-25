@@ -1,73 +1,456 @@
-.perfil-container {
-  padding: 40px 20px;
+/* ============================================================
+   PERFIL PAGE — New Start Travel Agency
+   Accessible · Responsive · Brand-consistent
+   Brand: Navy #0a192f · Sky Blue #00aaff · Gold #f0c040
+   ============================================================ */
+
+/* ---- Full-screen wrapper ---- */
+.perfil-wrapper {
+  min-height: calc(100vh - 70px);
+  background-image: url('/assets/img/profile-bg.png');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  position: relative;
   display: flex;
+  align-items: flex-start;
   justify-content: center;
+  padding: 48px 16px 60px;
 }
 
-.profile-card {
-  background: white;
-  padding: 40px;
-  border-radius: var(--border-radius);
-  box-shadow: var(--shadow-md);
+.perfil-wrapper::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    155deg,
+    rgba(10, 25, 47, 0.78) 0%,
+    rgba(0, 80, 150, 0.60) 100%
+  );
+  z-index: 1;
+}
+
+/* ---- Centered container ---- */
+.perfil-container {
+  position: relative;
+  z-index: 2;
   width: 100%;
-  max-width: 600px;
-  text-align: center;
+  max-width: 620px;
 }
 
+/* ---- Glass card ---- */
+.profile-card {
+  background: #ffffff;
+  border-radius: 24px;
+  box-shadow:
+    0 32px 80px rgba(0, 0, 0, 0.38),
+    0 0 0 1px rgba(255, 255, 255, 0.35);
+  overflow: hidden;
+  animation: cardEntrance 0.55s cubic-bezier(0.34, 1.4, 0.64, 1) both;
+}
+
+@keyframes cardEntrance {
+  from { opacity: 0; transform: translateY(36px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0)   scale(1); }
+}
+
+/* ============================================================
+   PROFILE HEADER
+   ============================================================ */
 .profile-header {
-  margin-bottom: 30px;
+  background: linear-gradient(135deg, #0a192f 0%, #123d6e 60%, #1a5498 100%);
+  padding: 44px 32px 32px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Decorative plane watermark */
+.profile-header::before {
+  content: '✈';
+  position: absolute;
+  right: -10px;
+  bottom: -20px;
+  font-size: 120px;
+  color: rgba(255, 255, 255, 0.05);
+  line-height: 1;
+  pointer-events: none;
 }
 
 .avatar {
-  width: 100px;
-  height: 100px;
-  background-color: var(--accent-color);
-  color: var(--primary-color);
+  width: 92px;
+  height: 92px;
+  background: linear-gradient(135deg, #00aaff 0%, #005fa3 100%);
+  color: #fff;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 2.5rem;
+  font-size: 2.2rem;
   font-weight: 800;
-  margin: 0 auto 15px;
+  margin: 0 auto 18px;
+  border: 4px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  letter-spacing: -1px;
 }
 
-.role {
-  color: var(--secondary-color);
+.profile-header h1 {
+  color: #ffffff;
+  font-size: 1.65rem;
   font-weight: 700;
-  text-transform: uppercase;
-  font-size: 0.8rem;
-  letter-spacing: 1px;
+  margin: 0 0 10px;
+  letter-spacing: 0.3px;
 }
 
-.profile-details {
-  text-align: left;
-  border-top: 1px solid #f0f0f0;
-  padding-top: 20px;
-  margin-bottom: 30px;
+/* Gold role pill */
+.role {
+  display: inline-block;
+  background: linear-gradient(90deg, #f0c040, #e8a800);
+  color: #0a192f;
+  font-weight: 900;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+  padding: 6px 20px;
+  border-radius: 20px;
+  box-shadow: 0 3px 12px rgba(240, 192, 64, 0.45);
+}
+
+/* ============================================================
+   CARD BODY
+   ============================================================ */
+.profile-body {
+  padding: 32px 36px 36px;
+}
+
+/* ============================================================
+   VIEW MODE — read-only details
+   ============================================================ */
+.profile-details-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  margin-bottom: 28px;
 }
 
 .detail-item {
-  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 16px 16px;
+  border-bottom: 1px solid #e0e8f4;
 }
 
-.detail-item label {
-  display: block;
-  font-size: 0.8rem;
-  color: var(--text-muted);
-  margin-bottom: 2px;
+.detail-item:nth-child(odd)  { border-right: 1px solid #eef2f8; }
+
+.full-width {
+  grid-column: 1 / -1;
+  border-right: none !important;
 }
 
-.detail-item span {
+.detail-label {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 1.4px;
+  color: #0088cc;
+  font-weight: 900;
+  margin: 0;
+}
+
+.detail-value {
   font-size: 1.1rem;
-  font-weight: 500;
-  color: var(--text-color);
+  font-weight: 700;
+  color: #0a192f;
+  line-height: 1.5;
+  margin: 0;
 }
 
+.detail-value.empty {
+  color: #8a9ab0;
+  font-weight: 500;
+  font-style: italic;
+  font-size: 1rem;
+}
+
+/* ---- Destination highlight ---- */
+.detail-item.destination-item .detail-label { color: #c88000; }
+.detail-item.destination-item .detail-value {
+  color: #0a192f;
+  font-size: 1.12rem;
+}
+
+/* ---- Edit button ---- */
 .btn-edit {
-  background-color: var(--primary-color);
-  color: white;
-  padding: 10px 30px;
-  border-radius: 8px;
-  font-weight: 600;
+  width: 100%;
+  background: linear-gradient(135deg, #0a192f 0%, #143a68 100%);
+  color: #fff;
+  padding: 16px;
+  border-radius: 14px;
+  font-weight: 800;
+  font-size: 0.93rem;
+  border: none;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  box-shadow: 0 6px 20px rgba(10, 25, 47, 0.28);
+  margin-top: 8px;
+}
+
+.btn-edit:hover,
+.btn-edit:focus-visible {
+  background: linear-gradient(135deg, #143a68, #1a5498);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(10, 25, 47, 0.35);
+  outline: 3px solid #00aaff;
+  outline-offset: 2px;
+}
+
+/* ============================================================
+   EDIT FORM
+   ============================================================ */
+.edit-form { text-align: left; }
+
+/* Section dividers with colour accent line */
+.form-section-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #0a192f;
+  margin: 26px 0 14px;
+}
+
+.form-section-title:first-of-type { margin-top: 0; }
+
+.form-section-title::after {
+  content: '';
+  flex: 1;
+  height: 2px;
+  background: linear-gradient(90deg, #00aaff 0%, #e8f4ff 100%);
+  border-radius: 2px;
+}
+
+/* 2-col grid, collapses to 1 on mobile */
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-bottom: 4px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.form-group.full-width { grid-column: 1 / -1; }
+
+/* Accessible label */
+.form-group label {
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 1.4px;
+  color: #0070bb;
+  font-weight: 900;
+}
+
+.form-group label small {
+  text-transform: none;
+  font-weight: 500;
+  color: #7a8fa3;
+  letter-spacing: 0;
+  font-size: 0.74rem;
+  margin-left: 4px;
+}
+
+/* Input fields */
+.form-group input {
+  padding: 13px 16px;
+  border: 2px solid #d0dcf0;
+  border-radius: 12px;
+  font-size: 1.05rem;
+  color: #0a192f;
+  background: #f4f8ff;
+  transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+  outline: none;
+  font-family: inherit;
+  line-height: 1.5;
+  font-weight: 500;
+}
+
+.form-group input:hover:not(:disabled) {
+  border-color: #9ab8d8;
+}
+
+/* Accessible focus ring */
+.form-group input:focus {
+  border-color: #00aaff;
+  background: #fff;
+  box-shadow: 0 0 0 4px rgba(0, 170, 255, 0.15);
+}
+
+.form-group input::placeholder { color: #9aaabb; font-weight: 400; }
+
+/* Invalid field */
+.form-group input.ng-touched.ng-invalid {
+  border-color: #e05050;
+  background: #fff8f8;
+  box-shadow: 0 0 0 3px rgba(220, 80, 80, 0.1);
+}
+
+/* Gold left-border for critical travel docs */
+.form-group input[formControlName="passport_number"],
+.form-group input[formControlName="emergency_contact"] {
+  border-left: 4px solid #f0c040;
+}
+
+/* ---- Form actions row ---- */
+.form-actions {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.btn-cancel {
+  padding: 14px 26px;
+  border-radius: 12px;
+  font-weight: 800;
+  font-size: 0.92rem;
+  border: 2px solid #b0c4de;
+  background: transparent;
+  color: #1a3a5c;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  white-space: nowrap;
+}
+.btn-cancel:hover,
+.btn-cancel:focus-visible {
+  border-color: #0a192f;
+  color: #0a192f;
+  background: #eef3fa;
+  outline: 3px solid #00aaff;
+  outline-offset: 2px;
+}
+
+.btn-save {
+  padding: 14px;
+  border-radius: 12px;
+  font-weight: 800;
+  font-size: 0.9rem;
+  border: none;
+  background: linear-gradient(135deg, #00aaff 0%, #005fa3 100%);
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.25s;
+  box-shadow: 0 6px 20px rgba(0, 120, 200, 0.35);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+}
+.btn-save:hover:not(:disabled),
+.btn-save:focus-visible:not(:disabled) {
+  background: linear-gradient(135deg, #009aeb, #004d87);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(0, 120, 200, 0.45);
+  outline: 3px solid #0a192f;
+  outline-offset: 2px;
+}
+.btn-save:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  filter: grayscale(30%);
+}
+
+/* ============================================================
+   ALERT MESSAGES
+   ============================================================ */
+.alert {
+  position: fixed;
+  top: 88px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 15px 32px;
+  border-radius: 14px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  z-index: 9999;
+  white-space: nowrap;
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.22);
+  animation: alertDrop 0.4s cubic-bezier(0.34, 1.4, 0.64, 1) both;
+}
+
+@keyframes alertDrop {
+  from { opacity: 0; top: 65px; }
+  to   { opacity: 1; top: 88px; }
+}
+
+.alert-success {
+  background: linear-gradient(135deg, #e6fef0, #ccf5da);
+  color: #0a4a1c;
+  border: 2px solid #5dce80;
+}
+.alert-error {
+  background: linear-gradient(135deg, #fff0f0, #fdd);
+  color: #7a0a0a;
+  border: 2px solid #f07070;
+}
+
+/* ============================================================
+   RESPONSIVE — tablet & mobile
+   ============================================================ */
+
+/* Tablet (≤ 768px) */
+@media (max-width: 768px) {
+  .profile-body { padding: 24px 24px 30px; }
+
+  .form-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+}
+
+/* Mobile (≤ 540px) */
+@media (max-width: 540px) {
+  .perfil-wrapper { padding: 24px 12px 48px; }
+
+  .profile-header { padding: 32px 20px 26px; }
+  .profile-header h2 { font-size: 1.4rem; }
+
+  .avatar {
+    width: 76px;
+    height: 76px;
+    font-size: 1.9rem;
+  }
+
+  .profile-body { padding: 20px 16px 24px; }
+
+  /* Stack all grid columns to 1 */
+  .profile-details-grid,
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Remove side border in single-col detail mode */
+  .detail-item:nth-child(odd) { border-right: none; }
+
+  .form-actions { grid-template-columns: 1fr; }
+  .btn-cancel { text-align: center; }
+  .alert { white-space: normal; text-align: center; width: 90%; }
+}
+
+/* Very small screens (≤ 360px) */
+@media (max-width: 360px) {
+  .profile-header h2 { font-size: 1.2rem; }
+  .form-group input  { font-size: 0.9rem; }
 }
