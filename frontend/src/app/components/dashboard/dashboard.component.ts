@@ -6,11 +6,12 @@ import { ApiService } from '../../services/api.service';
 import { Service } from '../../models/service';
 import { Plan } from '../../models/plan';
 import { NavbarComponent } from '../navbar/navbar.component';
+import { TranslatePipe } from '../../pipes/translate.pipe';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, RouterModule, NavbarComponent],
+  imports: [CommonModule, RouterModule, NavbarComponent, TranslatePipe],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css'
 })

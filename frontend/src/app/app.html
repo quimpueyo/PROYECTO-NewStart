@@ -197,11 +197,11 @@
 <div class="container">
   <header>
     <h1>{{ title() }}</h1>
-    <p>Tu nueva vida comienza aquí. Servicios profesionales para tu reubicación.</p>
+    <p>Your new life starts here. Professional services for your relocation.</p>
   </header>
 
   <section id="services">
-    <h2>Nuestros Servicios</h2>
+    <h2>Our Services</h2>
     <div class="grid">
       @if (services().length > 0) {
         @for (service of services(); track service.id) {
@@ -209,36 +209,36 @@
             <span class="category-pill">{{ service.category }}</span>
             <h3>{{ service.name }}</h3>
             <p>{{ service.description }}</p>
-            <button class="btn">Más información</button>
+            <button class="btn">More info</button>
           </div>
         }
       } @else {
         <div class="empty-state">
-          <p>Cargando servicios desde el backend...</p>
+          <p>Loading services from the backend...</p>
         </div>
       }
     </div>
   </section>
 
   <section id="plans">
-    <h2>Planes de Apoyo</h2>
+    <h2>Support Plans</h2>
     <div class="plans-grid">
       @if (plans().length > 0) {
         @for (plan of plans(); track plan.id) {
           <div class="plan-card" [class.featured]="plan.name === 'Premium'">
             <h3>{{ plan.name }}</h3>
-            <div class="price">{{ plan.price }}€<span>/mes</span></div>
+            <div class="price">{{ plan.price }}€<span>/mo</span></div>
             <ul class="features-list">
               @for (feature of plan.features; track $index) {
                 <li>{{ feature }}</li>
               }
             </ul>
-            <button class="btn">Suscribirse</button>
+            <button class="btn">Subscribe</button>
           </div>
         }
       } @else {
         <div class="empty-state">
-          <p>Cargando planes desde el backend...</p>
+          <p>Loading plans from the backend...</p>
         </div>
       }
     </div>

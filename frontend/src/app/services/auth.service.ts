@@ -25,7 +25,7 @@ export class AuthService {
 
   login(credentials: any): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/login`, credentials).pipe(
-      tap((res) => {
+      tap((res: any) => {
         if (res.access_token) {
           localStorage.setItem('token', res.access_token);
           localStorage.setItem('user', JSON.stringify(res.user));
@@ -37,7 +37,7 @@ export class AuthService {
 
   register(userData: any): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/register`, userData).pipe(
-      tap((res) => {
+      tap((res: any) => {
         if (res.access_token) {
           localStorage.setItem('token', res.access_token);
           localStorage.setItem('user', JSON.stringify(res.user));
@@ -68,12 +68,23 @@ export class AuthService {
   
   updateProfile(userId: number, userData: any): Observable<any> {
     return this.http.put<any>(`${this.apiUrl}/users/${userId}`, userData).pipe(
-      tap((res) => {
+      tap((res: any) => {
         if (res.user) {
           localStorage.setItem('user', JSON.stringify(res.user));
           this.currentUserSubject.next(res.user);
         }
       })
     );
+  }
+
+  getUsers(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/users`);
+  }
+
+  /**
+   * Admin-only: Create a user WITHOUT logging in as them
+   */
+  createUser(userData: any): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/register`, userData);
   }
 }

@@ -9,7 +9,8 @@
   --shadow-sm: 0 4px 6px rgba(0,0,0,0.05);
   --shadow-md: 0 10px 25px rgba(0,0,0,0.08);
   --border-radius: 12px;
-  --font-main: 'Inter', -apple-system, system-ui, sans-serif;
+  --font-main: 'Inter', sans-serif;
+  --font-accent: 'Outfit', sans-serif;
 }
 
 * {
@@ -42,8 +43,8 @@ button {
 
 /* Global Logo Styles */
 .logo-mark {
-  width: 55px;
-  height: 55px;
+  width: 75px; 
+  height: 75px;
   background: #000; /* Black Badge as in image */
   border-radius: 50%;
   display: flex;

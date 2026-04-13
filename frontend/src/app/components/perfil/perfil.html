@@ -1,227 +1,256 @@
 <app-navbar></app-navbar>
 
-<main class="perfil-wrapper" role="main" aria-label="Página de Perfil">
+<main class="perfil-wrapper" role="main" aria-label="Profile Page">
   <div class="perfil-container" *ngIf="user | async as currentUser">
 
-    <!-- Accessible live-region alerts -->
+    <!-- Live-region alerts -->
     <div class="alert alert-success" role="alert" aria-live="polite" *ngIf="successMessage">
-      ✅ {{ successMessage }}
+      {{ successMessage }}
     </div>
     <div class="alert alert-error" role="alert" aria-live="assertive" *ngIf="errorMessage">
-      ❌ {{ errorMessage }}
+      {{ errorMessage }}
     </div>
 
-    <article class="profile-card" aria-label="Tarjeta de perfil de {{ currentUser.name }}">
+    <article class="profile-card" aria-label="Profile card of {{ currentUser.name }}">
 
-      <!-- === BRAND HEADER === -->
+      <!-- HEADER -->
       <header class="profile-header">
         <div class="avatar" aria-hidden="true">
           {{ currentUser.name[0] }}{{ currentUser.lastname ? currentUser.lastname[0] : '' }}
         </div>
         <h1>{{ currentUser.name }} {{ currentUser.lastname }}</h1>
-        <span class="role" aria-label="Rol: {{ currentUser.role }}">{{ currentUser.role }}</span>
+        <div class="header-badges">
+          <span class="role" aria-label="Role: {{ currentUser.role }}">{{ currentUser.role }}</span>
+          <span class="plan-badge" *ngIf="currentUser.plan" aria-label="Plan: {{ currentUser.plan.name }}">{{ currentUser.plan.name }}</span>
+        </div>
       </header>
 
-      <!-- === BODY === -->
+      <!-- BODY -->
       <div class="profile-body">
 
-        <!-- ======= VIEW MODE ======= -->
-        <section *ngIf="!editMode" aria-label="Información del perfil">
-          <dl class="profile-details-grid">
+        <!-- PERSONAL INFO (Always visible for all roles) -->
+        <section aria-label="Profile information">
+          <div *ngIf="!editMode">
+            <dl class="profile-details-grid">
+              <!-- Header 1 -->
+              <div class="form-header-small">{{ 'profile.sectionAccount' | translate }}</div>
+              <div class="detail-item">
+                <dt class="detail-label">{{ 'profile.username' | translate }}</dt>
+                <dd class="detail-value">{{ currentUser.username }}</dd>
+              </div>
+              <div class="detail-item">
+                <dt class="detail-label">{{ 'profile.email' | translate }}</dt>
+                <dd class="detail-value">{{ currentUser.email }}</dd>
+              </div>
 
-            <div class="detail-item">
-              <dt class="detail-label">Email</dt>
-              <dd class="detail-value">{{ currentUser.email }}</dd>
-            </div>
-            <div class="detail-item">
-              <dt class="detail-label">Teléfono</dt>
-              <dd class="detail-value" [class.empty]="!currentUser.phone">
-                {{ currentUser.phone || 'No especificado' }}
-              </dd>
-            </div>
+              <!-- Header 2 -->
+              <div class="form-header-small">{{ 'profile.sectionPassport' | translate }}</div>
+              <div class="detail-item">
+                <dt class="detail-label">{{ 'profile.nationality' | translate }}</dt>
+                <dd class="detail-value">{{ currentUser.nationality || '—' }}</dd>
+              </div>
+              <div class="detail-item">
+                <dt class="detail-label">{{ 'profile.idPassport' | translate }}</dt>
+                <dd class="detail-value">{{ currentUser.passport_number || '—' }}</dd>
+              </div>
+              <div class="detail-item">
+                <dt class="detail-label">{{ 'profile.passportExpiry' | translate }}</dt>
+                <dd class="detail-value">{{ currentUser.passport_expiry || '—' }}</dd>
+              </div>
+              <div class="detail-item">
+                <dt class="detail-label">{{ 'profile.preferredLanguage' | translate }}</dt>
+                <dd class="detail-value">{{ currentUser.preferred_language || '—' }}</dd>
+              </div>
 
-            <div class="detail-item">
-              <dt class="detail-label">F. Nacimiento</dt>
-              <dd class="detail-value" [class.empty]="!currentUser.date_of_birth">
-                {{ currentUser.date_of_birth || 'No especificada' }}
-              </dd>
-            </div>
-            <div class="detail-item">
-              <dt class="detail-label">Nacionalidad</dt>
-              <dd class="detail-value" [class.empty]="!currentUser.nationality">
-                {{ currentUser.nationality || 'No especificada' }}
-              </dd>
-            </div>
+              <!-- Header 3 -->
+              <div class="form-header-small">{{ 'profile.sectionPersonal' | translate }}</div>
+              <div class="detail-item">
+                <dt class="detail-label">{{ 'profile.firstname' | translate }}</dt>
+                <dd class="detail-value">{{ currentUser.name }}</dd>
+              </div>
+              <div class="detail-item">
+                <dt class="detail-label">{{ 'profile.lastname' | translate }}</dt>
+                <dd class="detail-value">{{ currentUser.lastname || '—' }}</dd>
+              </div>
+              <div class="detail-item">
+                <dt class="detail-label">{{ 'profile.dob' | translate }}</dt>
+                <dd class="detail-value">{{ currentUser.date_of_birth || '—' }}</dd>
+              </div>
+              <div class="detail-item">
+                <dt class="detail-label">{{ 'profile.gender' | translate }}</dt>
+                <dd class="detail-value text-capitalize">{{ currentUser.gender || '—' }}</dd>
+              </div>
 
-            <div class="detail-item">
-              <dt class="detail-label">DNI / Pasaporte</dt>
-              <dd class="detail-value" [class.empty]="!currentUser.passport_number">
-                {{ currentUser.passport_number || 'No especificado' }}
-              </dd>
-            </div>
-            <div class="detail-item">
-              <dt class="detail-label">Contacto Emergencia</dt>
-              <dd class="detail-value" [class.empty]="!currentUser.emergency_contact">
-                {{ currentUser.emergency_contact || 'No especificado' }}
-              </dd>
-            </div>
+              <!-- Header 4 -->
+              <div class="form-header-small">{{ 'profile.sectionAddress' | translate }}</div>
+              <div class="detail-item">
+                <dt class="detail-label">{{ 'profile.phone' | translate }}</dt>
+                <dd class="detail-value">{{ currentUser.phone || '—' }}</dd>
+              </div>
+              <div class="detail-item">
+                <dt class="detail-label">{{ 'profile.emergencyContact' | translate }}</dt>
+                <dd class="detail-value">{{ currentUser.emergency_contact || '—' }}</dd>
+              </div>
+              <div class="detail-item full-width">
+                <dt class="detail-label">{{ 'profile.address' | translate }}</dt>
+                <dd class="detail-value">
+                  {{ currentUser.address || '—' }} 
+                  <span *ngIf="currentUser.city">({{ currentUser.city }})</span>
+                </dd>
+              </div>
+            </dl>
+            <button class="btn-edit" (click)="openEdit()">{{ 'profile.editBtn' | translate }}</button>
+          </div>
 
-            <div class="detail-item full-width destination-item" *ngIf="currentUser.destination_country">
-              <dt class="detail-label">✈ País de Destino</dt>
-              <dd class="detail-value">{{ currentUser.destination_country }}</dd>
-            </div>
+          <!-- EDIT FORM -->
+          <div *ngIf="editMode">
+            <form [formGroup]="editForm" (ngSubmit)="saveProfile()" novalidate>
+              <h2 class="form-section-title">{{ 'profile.updateTitle' | translate }}</h2>
+              
+              <div class="form-grid">
+                <!-- Section: Account -->
+                <div class="form-header-small">{{ 'profile.sectionAccount' | translate }}</div>
+                <div class="form-group">
+                  <label for="field-username">{{ 'profile.username' | translate }} *</label>
+                  <input id="field-username" type="text" formControlName="username" autocomplete="username" />
+                </div>
+                <div class="form-group">
+                  <label for="field-email">{{ 'profile.email' | translate }} *</label>
+                  <input id="field-email" type="email" formControlName="email" />
+                </div>
+                <div class="form-group">
+                  <label for="field-name">{{ 'profile.firstname' | translate }} *</label>
+                  <input id="field-name" type="text" formControlName="name" />
+                </div>
+                <div class="form-group">
+                  <label for="field-lastname">{{ 'profile.lastname' | translate }}</label>
+                  <input id="field-lastname" type="text" formControlName="lastname" />
+                </div>
 
-          </dl>
+                <!-- Section: Travel Documents -->
+                <div class="form-header-small">{{ 'profile.sectionPassport' | translate }}</div>
+                <div class="form-group">
+                  <label for="field-passport">{{ 'profile.idPassport' | translate }}</label>
+                  <input id="field-passport" type="text" formControlName="passport_number" placeholder="P12345678" />
+                </div>
+                <div class="form-group">
+                  <label for="field-passport-expiry">{{ 'profile.passportExpiry' | translate }}</label>
+                  <input id="field-passport-expiry" type="date" formControlName="passport_expiry" />
+                </div>
+                <div class="form-group">
+                  <label for="field-nationality">{{ 'profile.nationality' | translate }}</label>
+                  <input id="field-nationality" type="text" formControlName="nationality" [placeholder]="'profile.nationalityPlaceholder' | translate" />
+                </div>
+                <div class="form-group">
+                  <label for="field-pref-lang">{{ 'profile.preferredLanguage' | translate }}</label>
+                  <input id="field-pref-lang" type="text" formControlName="preferred_language" placeholder="English, Spanish..." />
+                </div>
 
-          <button
-            class="btn-edit"
-            (click)="openEdit()"
-            aria-label="Editar información del perfil">
-            ✏ Editar Perfil
-          </button>
+                <!-- Section: Personal Details -->
+                <div class="form-header-small">{{ 'profile.sectionPersonal' | translate }}</div>
+                <div class="form-group">
+                  <label for="field-dob">{{ 'profile.dob' | translate }}</label>
+                  <input id="field-dob" type="date" formControlName="date_of_birth" />
+                </div>
+                <div class="form-group">
+                  <label for="field-gender">{{ 'profile.gender' | translate }}</label>
+                  <select id="field-gender" formControlName="gender">
+                    <option value="">{{ 'profile.select' | translate }}</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="field-phone">{{ 'profile.phone' | translate }}</label>
+                  <input id="field-phone" type="tel" formControlName="phone" placeholder="+34..." />
+                </div>
+                <div class="form-group">
+                  <label for="field-emergency">{{ 'profile.emergencyContact' | translate }}</label>
+                  <input id="field-emergency" type="text" formControlName="emergency_contact" [placeholder]="'profile.emergencyPlaceholder' | translate" />
+                </div>
+
+                <!-- Section: Address -->
+                <div class="form-header-small">{{ 'profile.sectionAddress' | translate }}</div>
+                <div class="form-group full-width">
+                  <label for="field-address">{{ 'profile.address' | translate }}</label>
+                  <input id="field-address" type="text" formControlName="address" />
+                </div>
+                <div class="form-group">
+                  <label for="field-city">{{ 'profile.city' | translate }}</label>
+                  <input id="field-city" type="text" formControlName="city" />
+                </div>
+                <div class="form-group">
+                  <label for="field-postal">{{ 'profile.postalCode' | translate }}</label>
+                  <input id="field-postal" type="text" formControlName="postal_code" />
+                </div>
+              </div>
+
+              <div class="form-actions">
+                <button type="button" class="btn-cancel" (click)="cancelEdit()">{{ 'profile.cancel' | translate }}</button>
+                <button type="submit" class="btn-save" [disabled]="loading || editForm.invalid">
+                  {{ loading ? ('profile.saving' | translate) : ('profile.save' | translate) }}
+                </button>
+              </div>
+            </form>
+          </div>
         </section>
 
-        <!-- ======= EDIT MODE ======= -->
-        <section *ngIf="editMode" aria-label="Formulario de edición de perfil">
-          <form [formGroup]="editForm" (ngSubmit)="saveProfile()" novalidate aria-label="Formulario de perfil">
+        <!-- ADMIN ONLY SECTION -->
+        <div *ngIf="isAdmin" class="admin-only-wrapper">
+          <div class="admin-header-flex">
+            <h2 class="form-section-title">{{ 'profile.userList' | translate }}</h2>
+            <button class="btn-add-user" (click)="toggleAddUser()">
+              {{ showAddUserForm ? '× ' + ('profile.cancel' | translate) : '+ ' + ('profile.addUser' | translate) }}
+            </button>
+          </div>
 
-            <!-- Personal -->
-            <h2 class="form-section-title" id="section-personal">👤 Datos Personales</h2>
-            <div class="form-grid" role="group" aria-labelledby="section-personal">
-
-              <div class="form-group">
-                <label for="field-name">Nombre *</label>
-                <input
-                  id="field-name"
-                  type="text"
-                  formControlName="name"
-                  placeholder="Tu nombre"
-                  autocomplete="given-name"
-                  aria-required="true"
-                  [attr.aria-invalid]="editForm.get('name')?.invalid && editForm.get('name')?.touched" />
+          <!-- ADD USER FORM (Admin only) -->
+          <div *ngIf="showAddUserForm" class="add-user-modal-box">
+            <form [formGroup]="registerUserForm" (ngSubmit)="addUser()" class="compact-form">
+              <h3 class="mini-title">{{ 'profile.addUser' | translate }}</h3>
+              <div class="mini-form-grid">
+                <input type="text" formControlName="username" [placeholder]="'register.username' | translate" />
+                <input type="text" formControlName="name" [placeholder]="'register.firstname' | translate" />
+                <input type="text" formControlName="lastname" [placeholder]="'register.lastname' | translate" />
+                <input type="email" formControlName="email" [placeholder]="'profile.email' | translate" />
+                <input type="password" formControlName="password" [placeholder]="'register.password' | translate" />
               </div>
-
-              <div class="form-group">
-                <label for="field-lastname">Apellido</label>
-                <input
-                  id="field-lastname"
-                  type="text"
-                  formControlName="lastname"
-                  placeholder="Tu apellido"
-                  autocomplete="family-name" />
-              </div>
-
-              <div class="form-group">
-                <label for="field-email">Email *</label>
-                <input
-                  id="field-email"
-                  type="email"
-                  formControlName="email"
-                  placeholder="email@ejemplo.com"
-                  autocomplete="email"
-                  aria-required="true"
-                  [attr.aria-invalid]="editForm.get('email')?.invalid && editForm.get('email')?.touched" />
-              </div>
-
-              <div class="form-group">
-                <label for="field-phone">Teléfono</label>
-                <input
-                  id="field-phone"
-                  type="tel"
-                  formControlName="phone"
-                  placeholder="+34 600 000 000"
-                  autocomplete="tel" />
-              </div>
-
-              <div class="form-group">
-                <label for="field-dob">Fecha de Nacimiento</label>
-                <input
-                  id="field-dob"
-                  type="date"
-                  formControlName="date_of_birth"
-                  autocomplete="bday" />
-              </div>
-
-              <div class="form-group">
-                <label for="field-nationality">Nacionalidad</label>
-                <input
-                  id="field-nationality"
-                  type="text"
-                  formControlName="nationality"
-                  placeholder="Española, Francesa..." />
-              </div>
-            </div>
-
-            <!-- Travel Docs -->
-            <h2 class="form-section-title" id="section-travel">🛂 Documentación de Viaje</h2>
-            <div class="form-grid" role="group" aria-labelledby="section-travel">
-
-              <div class="form-group">
-                <label for="field-passport">DNI / Pasaporte</label>
-                <input
-                  id="field-passport"
-                  type="text"
-                  formControlName="passport_number"
-                  placeholder="P12345678" />
-              </div>
-
-              <div class="form-group">
-                <label for="field-emergency">Contacto de Emergencia</label>
-                <input
-                  id="field-emergency"
-                  type="text"
-                  formControlName="emergency_contact"
-                  placeholder="Nombre — +34 600..." />
-              </div>
-
-              <div class="form-group full-width">
-                <label for="field-destination">✈ País de Destino</label>
-                <input
-                  id="field-destination"
-                  type="text"
-                  formControlName="destination_country"
-                  placeholder="Noruega, Alemania, Francia..." />
-              </div>
-            </div>
-
-            <!-- Security -->
-            <h2 class="form-section-title" id="section-security">🔒 Seguridad</h2>
-            <div class="form-grid" role="group" aria-labelledby="section-security">
-              <div class="form-group full-width">
-                <label for="field-password">
-                  Nueva Contraseña
-                  <small>(déjalo vacío para no cambiar)</small>
-                </label>
-                <input
-                  id="field-password"
-                  type="password"
-                  formControlName="password"
-                  placeholder="••••••••"
-                  autocomplete="new-password" />
-              </div>
-            </div>
-
-            <!-- Action buttons -->
-            <div class="form-actions">
-              <button
-                type="button"
-                class="btn-cancel"
-                (click)="cancelEdit()"
-                aria-label="Cancelar edición y volver a la vista del perfil">
-                Cancelar
+              <button type="submit" class="btn-save mini" [disabled]="loading || registerUserForm.invalid">
+                {{ loading ? ('profile.registeringUser' | translate) : ('profile.addUser' | translate) }}
               </button>
-              <button
-                type="submit"
-                class="btn-save"
-                [disabled]="loading || editForm.invalid"
-                [attr.aria-busy]="loading"
-                aria-label="Guardar cambios del perfil">
-                {{ loading ? 'Guardando...' : '✔ Guardar Cambios' }}
-              </button>
-            </div>
+            </form>
+          </div>
 
-          </form>
-        </section>
+          <div class="admin-users-list" *ngIf="!showAddUserForm">
+            <div class="user-item-card" *ngFor="let u of allUsers">
+              <div class="user-info-main">
+                <span class="u-username">{{ u.username }}</span>
+                <div class="user-actions">
+                  <span class="role-chip" [class.admin]="u.role === 'admin'">{{ u.role }}</span>
+                  <!-- Don't let admin delete themselves here easily without confirmation -->
+                  <button *ngIf="u.email !== currentUser.email" 
+                          class="btn-delete-user" 
+                          (click)="deleteUser(u.id)"
+                          [title]="'profile.delete' | translate">
+                    ×
+                  </button>
+                </div>
+              </div>
+              <div class="user-details-stacked">
+                <div class="u-row">
+                  <strong>{{ 'profile.firstname' | translate }}:</strong> {{ u.name }} {{ u.lastname }}
+                </div>
+                <div class="u-row">
+                  <strong>{{ 'profile.email' | translate }}:</strong> {{ u.email }}
+                </div>
+                <div class="u-row" *ngIf="u.phone">
+                  <strong>{{ 'profile.phone' | translate }}:</strong> {{ u.phone }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
       </div><!-- /profile-body -->
     </article>

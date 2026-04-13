@@ -1,11 +1,13 @@
+<app-navbar></app-navbar>
+
 <div class="auth-wrapper">
   <div class="auth-container split">
     <!-- Image Side -->
     <div class="auth-image signup">
       <div class="overlay"></div>
       <div class="image-content">
-        <h2>Únete a nuestra comunidad.</h2>
-        <p>Expertos en reubicación y servicios médicos internacionales a tu alcance.</p>
+        <h2>{{ 'register.headline' | translate }}</h2>
+        <p>{{ 'register.subtitle' | translate }}</p>
       </div>
     </div>
 
@@ -13,7 +15,6 @@
     <div class="auth-form-side scrollable">
       <div class="form-header">
         <div class="logo-mark" style="margin: 0 auto 15px;">
-          <!-- Exact Replica SVG: Original Colors (Black, Steel Blue, White) -->
           <svg width="45" height="45" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
             <circle cx="50" cy="50" r="48" fill="#000000"/>
             <circle cx="50" cy="50" r="32" fill="#4a6fa5"/>
@@ -24,19 +25,24 @@
             </g>
           </svg>
         </div>
-        <h1>Crea tu cuenta</h1>
-        <p>Empieza tu proceso hoy mismo</p>
+        <h1>{{ 'register.title' | translate }}</h1>
+        <p>{{ 'register.start' | translate }}</p>
       </div>
 
       <form (ngSubmit)="onSubmit()" class="register-form">
+        <div class="form-group">
+          <label>{{ 'register.username' | translate }}</label>
+          <input type="text" name="username" [(ngModel)]="userData.username" [placeholder]="'register.usernamePlaceholder' | translate" required>
+        </div>
+
         <div class="form-row">
           <div class="form-group half">
-            <label>Nombre</label>
-            <input type="text" name="name" [(ngModel)]="userData.name" placeholder="Tu nombre" required>
+            <label>{{ 'register.firstname' | translate }}</label>
+            <input type="text" name="name" [(ngModel)]="userData.name" [placeholder]="'register.firstnamePlaceholder' | translate" required>
           </div>
           <div class="form-group half">
-            <label>Apellidos</label>
-            <input type="text" name="lastname" [(ngModel)]="userData.lastname" placeholder="Apellidos" required>
+            <label>{{ 'register.lastname' | translate }}</label>
+            <input type="text" name="lastname" [(ngModel)]="userData.lastname" [placeholder]="'register.lastnamePlaceholder' | translate" required>
           </div>
         </div>
 
@@ -46,23 +52,23 @@
         </div>
 
         <div class="form-group">
-          <label>País de Destino (Opcional)</label>
-          <input type="text" name="destination_country" [(ngModel)]="userData.destination_country" placeholder="Ej: Alemania">
+          <label>{{ 'register.destination' | translate }}</label>
+          <input type="text" name="destination_country" [(ngModel)]="userData.destination_country" [placeholder]="'register.destinationPlaceholder' | translate">
         </div>
 
         <div class="form-group">
-          <label>Contraseña</label>
-          <input type="password" name="password" [(ngModel)]="userData.password" placeholder="Mín. 6 caracteres" required>
+          <label>{{ 'register.password' | translate }}</label>
+          <input type="password" name="password" [(ngModel)]="userData.password" [placeholder]="'register.passwordPlaceholder' | translate" required>
         </div>
 
         <div class="error-msg" *ngIf="error">
           {{ error }}
         </div>
 
-        <button type="submit" class="btn-auth">Registrarse</button>
+        <button type="submit" class="btn-auth">{{ 'register.submit' | translate }}</button>
 
         <p class="switch-auth">
-          ¿Ya tienes cuenta? <a routerLink="/login">Inicia sesión</a>
+          {{ 'register.hasAccount' | translate }} <a routerLink="/login">{{ 'register.login' | translate }}</a>
         </p>
       </form>
     </div>

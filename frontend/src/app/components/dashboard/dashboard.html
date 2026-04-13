@@ -2,14 +2,14 @@
 
 <div class="dashboard-container">
   <header class="hero" *ngIf="user | async as currentUser">
-    <h1>¡Bienvenido, {{ currentUser.name }}!</h1>
-    <p>Aquí tienes un resumen de tus servicios y planes de viaje disponibles.</p>
+    <h1>{{ 'dash.welcome' | translate }}, {{ currentUser.name }}!</h1>
+    <p>{{ 'dash.summary' | translate }}</p>
   </header>
 
   <section class="services-section">
     <h2>
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-      Servicios Médicos y Reubicación
+      {{ 'dash.services' | translate }}
     </h2>
     <div class="grid">
       @for (service of services(); track service.id) {
@@ -17,7 +17,7 @@
           <span class="category">{{ service.category }}</span>
           <h3>{{ service.name }}</h3>
           <p>{{ service.description }}</p>
-          <button class="btn-action">Solicitar Información</button>
+          <button class="btn-action">{{ 'dash.requestInfo' | translate }}</button>
         </div>
       }
     </div>
@@ -26,19 +26,19 @@
   <section class="plans-section">
     <h2>
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-      Planes de Seguimiento
+      {{ 'dash.plans' | translate }}
     </h2>
     <div class="plans-grid">
       @for (plan of plans(); track plan.id) {
         <div class="plan-card" [class.featured]="plan.name === 'Platinum'">
           <h3>{{ plan.name }}</h3>
-          <div class="price">{{ plan.price }}€<span>/mes</span></div>
+          <div class="price">{{ plan.price }}€<span>{{ 'dash.perMonth' | translate }}</span></div>
           <ul class="features">
             @for (feature of plan.features; track $index) {
               <li>{{ feature }}</li>
             }
           </ul>
-          <button class="btn-plan">Elegir este Plan</button>
+          <button class="btn-plan">{{ 'dash.choosePlan' | translate }}</button>
         </div>
       }
     </div>

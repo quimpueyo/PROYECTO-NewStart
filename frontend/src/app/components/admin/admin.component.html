@@ -1,0 +1,169 @@
+<app-navbar></app-navbar>
+
+<div class="admin-container">
+  <div class="admin-glass">
+    <header class="admin-header">
+      <div class="header-content">
+        <h1>Admin Control Center</h1>
+        <p class="subtitle">Manage users, accommodations, and site activities from one place.</p>
+        <div *ngIf="errorMessage" class="error-banner">
+          <i class="icon-warning"></i> {{errorMessage}}
+        </div>
+      </div>
+      <div class="header-actions">
+        <button class="btn-primary" (click)="showAddUserModal = true">
+          <i class="icon-plus"></i> Add User
+        </button>
+        <button class="btn-refresh" (click)="loadAll()" [disabled]="loading">
+          <i class="icon-refresh"></i> Refresh Data
+        </button>
+        <div class="admin-stats">
+          <div class="stat-card">
+            <span class="stat-value">{{users.length}}</span>
+            <span class="stat-label">Total Users</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-value">{{accommodations.length}}</span>
+            <span class="stat-label">Destinations</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-value">{{activities.length}}</span>
+            <span class="stat-label">Services</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- UI Modal for Adding Users -->
+    <div class="modal-overlay fade-in" *ngIf="showAddUserModal">
+      <div class="modal-card">
+        <h2>Create New User</h2>
+        <form (ngSubmit)="submitNewUser()" #userForm="ngForm">
+          <div class="form-grid">
+            <div class="form-group">
+              <label>Username</label>
+              <input type="text" [(ngModel)]="newUser.username" name="username" required placeholder="@username">
+            </div>
+            <div class="form-group">
+              <label>Email</label>
+              <input type="email" [(ngModel)]="newUser.email" name="email" required placeholder="email@example.com">
+            </div>
+            <div class="form-group">
+              <label>First Name</label>
+              <input type="text" [(ngModel)]="newUser.name" name="name" required placeholder="Name">
+            </div>
+            <div class="form-group">
+              <label>Last Name</label>
+              <input type="text" [(ngModel)]="newUser.lastname" name="lastname" required placeholder="Lastname">
+            </div>
+            <div class="form-group">
+              <label>Password</label>
+              <input type="password" [(ngModel)]="newUser.password" name="password" required placeholder="Min 6 chars">
+            </div>
+          </div>
+          <div class="modal-actions">
+            <button type="button" class="btn-secondary" (click)="showAddUserModal = false">Cancel</button>
+            <button type="submit" class="btn-primary" [disabled]="!userForm.form.valid">Create User</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <nav class="admin-nav">
+      <button [class.active]="activeTab === 'users'" (click)="switchTab('users')">
+        <i class="icon-users"></i> {{ 'admin.users' | translate }}
+      </button>
+      <button [class.active]="activeTab === 'accommodations'" (click)="switchTab('accommodations')">
+        <i class="icon-home"></i> {{ 'admin.accommodations' | translate }}
+      </button>
+      <button [class.active]="activeTab === 'activities'" (click)="switchTab('activities')">
+        <i class="icon-activity"></i> {{ 'admin.activities' | translate }}
+      </button>
+    </nav>
+
+    <main class="admin-content">
+      <div *ngIf="loading" class="loader-container">
+        <div class="loader"></div>
+        <p>Loading records...</p>
+      </div>
+
+      <!-- Users Tab -->
+      <section *ngIf="!loading && activeTab === 'users'" class="fade-in">
+        <div class="table-responsive">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Phone</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let user of users">
+                <td>#{{user.id}}</td>
+                <td>
+                  <div class="user-info">
+                    <div class="user-avatar">{{user.username.charAt(0).toUpperCase()}}</div>
+                    <span>{{user.username}}</span>
+                  </div>
+                </td>
+                <td>{{user.email}}</td>
+                <td><span class="badge" [ngClass]="user.role">{{user.role}}</span></td>
+                <td>{{user.phone || 'N/A'}}</td>
+                <td>
+                  <button class="btn-icon delete" (click)="deleteUser(user.id)" title="Delete User">
+                    <i class="icon-trash"></i>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Accommodations Tab -->
+      <section *ngIf="!loading && activeTab === 'accommodations'" class="fade-in">
+        <div class="grid-container">
+          <div class="item-card" *ngFor="let acc of accommodations">
+            <div class="card-img" [style.background-image]="'url(' + acc.cover_image + ')'">
+              <div class="flag-overlay" *ngIf="acc.flag_img">
+                <img [src]="acc.flag_img" alt="Flag">
+              </div>
+            </div>
+            <div class="card-body">
+              <h3>{{acc.name}}</h3>
+              <p>Total items: {{acc.items?.length || 0}}</p>
+              <div class="card-actions">
+                <button class="btn-secondary">View Details</button>
+                <button class="btn-danger" (click)="deleteAccommodation(acc.id)">Delete</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Activities Tab -->
+      <section *ngIf="!loading && activeTab === 'activities'" class="fade-in">
+        <div class="grid-container">
+          <div class="item-card service-card" *ngFor="let act of activities">
+            <div class="card-icon">
+              <i [class]="act.icon"></i>
+            </div>
+            <div class="card-body">
+              <span class="category-badge">{{act.category}}</span>
+              <h3>{{act.name}}</h3>
+              <p>{{act.description}}</p>
+              <div class="card-actions">
+                <button class="btn-secondary">Edit</button>
+                <button class="btn-danger" (click)="deleteActivity(act.id)">Delete</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+</div>

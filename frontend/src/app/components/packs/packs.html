@@ -1,0 +1,57 @@
+<app-navbar></app-navbar>
+
+<main class="packs-container" [style.--city-accent]="getCityDecoration().color" role="main">
+  <!-- City Decoration Header -->
+  <header class="packs-header">
+    <div class="city-meta">
+      <h1 id="packs-heading">
+        {{ 'packs.title' | translate }} <span class="dest-highlight">{{ destination }}</span>
+      </h1>
+      <p class="subtitle">{{ 'packs.tagline' | translate }}</p>
+    </div>
+  </header>
+
+  <div class="packs-grid" role="list">
+    <article *ngFor="let pack of packs; let i = index" 
+         class="pack-card" 
+         [class.popular]="pack.id === 'joint'"
+         role="listitem">
+      
+      <div *ngIf="pack.id === 'joint'" class="popular-tag" aria-label="Most popular option">POPULAR</div>
+      
+      <div class="pack-icon" aria-hidden="true">
+        <img [src]="pack.img" [alt]="''" class="pack-img">
+      </div>
+      
+      <h2 class="pack-title">{{ pack.key | translate }}</h2>
+      
+      <ul class="pack-features" aria-label="Pack features">
+        <li *ngFor="let item of pack.items">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="check-icon" aria-hidden="true">
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+          {{ item | translate }}
+        </li>
+      </ul>
+
+      <button class="select-btn" 
+              [class.popular-btn]="pack.id === 'joint'"
+              [attr.aria-label]="('packs.select' | translate) + ' - ' + (pack.key | translate)">
+        {{ 'packs.select' | translate }}
+      </button>
+    </article>
+  </div>
+
+  <nav class="back-nav" aria-label="Secondary navigation">
+    <a routerLink="/" 
+       class="back-link" 
+       [attr.aria-label]="'packs.back' | translate"
+       tabindex="0">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <line x1="19" y1="12" x2="5" y2="12"></line>
+        <polyline points="12 19 5 12 12 5"></polyline>
+      </svg>
+      {{ 'packs.back' | translate }}
+    </a>
+  </nav>
+</main>

@@ -6,23 +6,43 @@
     <div class="hero-overlay"></div>
     <div class="hero-container">
       <div class="hero-text">
-        <h1>MEJORA AÚN MÁS TUS <span>PLANES</span> DE VIAJE CON NOSOTROS.</h1>
-        <p>Un nuevo comienzo, conlleva grandes experiencias</p>
+        <h1 [innerHTML]="'home.hero.title' | translate"></h1>
+        <p>{{ 'home.hero.subtitle' | translate }}</p>
       </div>
 
       <div class="search-box">
         <div class="search-input-wrapper">
           <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" (click)="onSearch()">
             <circle cx="11" cy="11" r="8"></circle>
             <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
           </svg>
-          <input type="text" placeholder="BUSCA TU DESTINO">
+          <input type="text" 
+                 [(ngModel)]="searchTerm" 
+                 (input)="updateSuggestions()"
+                 (keyup.enter)="onSearch()" 
+                 [placeholder]="'home.hero.placeholder' | translate" 
+                 aria-label="Search destination"
+                 autocomplete="off">
+          
+          <!-- Autocomplete Dropdown -->
+          <ul class="suggestions-list" *ngIf="suggestions.length > 0">
+            <li *ngFor="let s of suggestions" (click)="selectSuggestion(s)">
+              <div class="suggestion-main">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="11" cy="11" r="8"></circle>
+                  <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+                <span class="suggestion-name">{{ s.name | uppercase }}</span>
+              </div>
+              <span class="suggestion-type">({{ s.type | translate | uppercase }})</span>
+            </li>
+          </ul>
         </div>
       </div>
 
       <div class="scroll-down" (click)="onArrowClick()">
-        <svg viewBox="0 0 24 24" width="40" height="40">
+        <svg viewBox="0 0 24 24">
           <path fill="white" d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z" />
         </svg>
       </div>
@@ -32,17 +52,17 @@
         <div class="country-modal" (click)="$event.stopPropagation()">
           <div class="modal-header">
             <button class="close-btn" (click)="showCountrySelection = false">&times;</button>
-            <h2>¡COMIENZA A PLANEAR TU VIAJE!</h2>
+            <h2>{{ 'home.modal.title' | translate }}</h2>
           </div>
 
           <div class="modal-body">
             <div class="info-bubble">
-              <p>Para poder empezar a planificar tu próxima aventura, deberás escojer el país al que quieres visitar</p>
+              <p>{{ 'home.modal.info' | translate }}</p>
             </div>
 
             <div class="selection-title">
               <div class="line"></div>
-              <span>SELECCIONA TU PAÍS</span>
+              <span>{{ 'home.modal.select' | translate }}</span>
               <div class="line"></div>
             </div>
 
@@ -82,15 +102,16 @@
         [style.backgroundImage]="'url(' + destinations[currentDestIndex].bgImage + ')'">
         <div class="destinations-header">
           <div class="header-center">
-            <h1>{{ destinations[currentDestIndex].country }}</h1>
+            <h1>{{ getDisplayName(destinations[currentDestIndex].country) }}</h1>
             <div class="info-icon">i</div>
           </div>
           <button class="close-dest" (click)="closeAll()">&times;</button>
         </div>
 
         <div class="destinations-grid">
-          <div class="dest-card" *ngFor="let item of destinations[currentDestIndex].items">
-            <p class="card-name">{{ item.name }}</p>
+          <div class="dest-card" *ngFor="let item of destinations[currentDestIndex].items" 
+               [routerLink]="['/packs', item.name]" (click)="closeAll()" style="cursor: pointer;">
+            <p class="card-name">{{ getDisplayName(item.name) }}</p>
             <div class="card-image-bg" [style.backgroundImage]="'url(' + item.img + ')'"></div>
           </div>
         </div>
@@ -98,22 +119,22 @@
     </div>
   </section>
 
-  <!-- Section 2: Burgundy Banner -->
+  <!-- Section 2: Banner -->
   <section class="banner-red">
     <div class="container">
-      <h2>TU VIAJE, ORGANIZADO MEJOR QUE POR UNA AGENCIA</h2>
+      <h2>{{ 'home.banner.title' | translate }}</h2>
       <div class="links-row">
-        <a href="#" class="wavy-link">Explora lo increíble</a>
-        <a href="#" class="wavy-link">¡Descubre Europa como nunca antes!</a>
+        <a href="#" class="wavy-link">{{ 'home.banner.explore' | translate }}</a>
+        <a href="#" class="wavy-link">{{ 'home.banner.discover' | translate }}</a>
       </div>
     </div>
   </section>
 
-  <!-- Section 3: Valoraciones (Reviews) -->
+  <!-- Section 3: Reviews -->
   <section id="valoraciones" class="reviews-section">
     <div class="reviews-overlay"></div>
     <div class="reviews-container">
-      <h2 class="reviews-title">¿Que dicen nuestros usuarios?</h2>
+      <h2 class="reviews-title">{{ 'home.reviews.title' | translate }}</h2>
 
       <div class="reviews-grid">
         <!-- Card 1 -->
@@ -124,8 +145,7 @@
           </div>
           <div class="card-content">
             <div class="stars">★★★★★</div>
-            <p>La gestión de mi traslado a Europa fue impecable. No solo encontraron el alojamiento ideal, sino que el
-              seguro médico que nos recomendaron nos dio total tranquilidad desde el primer día. Un servicio de 10.</p>
+            <p>{{ 'home.reviews.card1' | translate }}</p>
           </div>
         </div>
 
@@ -137,8 +157,7 @@
           </div>
           <div class="card-content">
             <div class="stars">★★★★★</div>
-            <p>Sinceramente, no sabía por dónde empezar con los trámites de salud y visados. El equipo se encargó de
-              toda la burocracia de forma rápida y efectiva. Muy agradecida por el trato personal recibido.</p>
+            <p>{{ 'home.reviews.card2' | translate }}</p>
           </div>
         </div>
 
@@ -150,8 +169,7 @@
           </div>
           <div class="card-content">
             <div class="stars">★★★★☆</div>
-            <p>Lo que más valoro es la seriedad. Mudarse de país es estresante, pero tener un soporte médico real
-              disponible 24/7 lo cambia todo. Ha sido la mejor decisión para mi familia.</p>
+            <p>{{ 'home.reviews.card3' | translate }}</p>
           </div>
         </div>
 
@@ -163,8 +181,7 @@
           </div>
           <div class="card-content">
             <div class="stars">★★★★★</div>
-            <p>Una plataforma increíblemente confiable. Todo el proceso de administración de mis documentos fue
-              transparente y organizado. La recomiendo a cualquiera que busque una transición profesional.</p>
+            <p>{{ 'home.reviews.card4' | translate }}</p>
           </div>
         </div>
 
@@ -176,8 +193,7 @@
           </div>
           <div class="card-content">
             <div class="stars">★★★★☆</div>
-            <p>Experiencia excelente. Mudarse por trabajo suele ser caótico, pero gracias a su apoyo logístico y
-              sanitario me sentí como en casa desde la primera semana. Muy buena organización.</p>
+            <p>{{ 'home.reviews.card5' | translate }}</p>
           </div>
         </div>
 
@@ -189,14 +205,15 @@
           </div>
           <div class="card-content">
             <div class="stars">★★★★★</div>
-            <p>A partir de ahora, todas mis gestiones internacionales las haré con este equipo. La calidad del
-              asesoramiento médico y de vivienda supera cualquier expectativa que tuviera.</p>
+            <p>{{ 'home.reviews.card6' | translate }}</p>
           </div>
         </div>
       </div>
 
       <div class="reviews-footer">
-        <a routerLink="/" class="btn-volver">VOLVER</a>
+        <a routerLink="/" class="btn-volver" (click)="scrollToTop()">
+          {{ 'home.reviews.back' | translate }}
+        </a>
       </div>
     </div>
   </section>
@@ -209,54 +226,46 @@
         <div class="logo-brand">
           <div class="brand-wrapper">
             <div class="logo-mark">
-              <!-- Professional SVG Logo: Globe + Planet Minimalist -->
-              <svg width="35" height="35" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="12" cy="12" r="9" stroke="#1a1a1a" stroke-width="1.5" />
-                <path d="M12 3C12 3 8.5 7.02944 8.5 12C8.5 16.9706 12 21 12 21" stroke="#4a6fa5" stroke-width="1.5"
-                  stroke-linecap="round" />
-                <path d="M12 3C12 3 15.5 7.02944 15.5 12C15.5 16.9706 12 21 12 21" stroke="#4a6fa5" stroke-width="1.5"
-                  stroke-linecap="round" />
-                <path d="M3 12H21" stroke="#1a1a1a" stroke-width="1.5" stroke-linecap="round" />
-                <path d="M18.5 14L21 12L18.5 10" stroke="#1a1a1a" stroke-width="2" stroke-linecap="round"
-                  stroke-linejoin="round" />
+              <svg width="60" height="60" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="50" cy="50" r="48" fill="#000000"/>
+                <circle cx="50" cy="50" r="32" fill="#4a6fa5"/>
+                <path d="M15 50 C15 65, 85 65, 85 50 C85 35, 30 35, 15 50 Z" fill="none" stroke="white" stroke-width="3.5" stroke-linecap="round" transform="rotate(-12, 50, 50)"/>
+                <g transform="translate(68, 32) rotate(35)">
+                  <path d="M0 0 L18 8 L0 16 L4 8 Z" fill="white"/>
+                  <path d="M6 8 L-6 4 L-4 8 L-6 12 Z" fill="white"/>
+                </g>
               </svg>
             </div>
             <div class="logo-text">
               TRIP N' <span class="joy-text">JOY</span>
             </div>
           </div>
-          <p class="tagline">VIVE GRANDES EXPERIENCIAS</p>
+          <p class="tagline">{{ 'nav.tagline' | translate }}</p>
         </div>
 
         <div class="social-section">
-          <p class="section-label">Nuestras redes sociales:</p>
+          <p class="section-label">{{ 'home.footer.social' | translate }}</p>
           <div class="social-icons">
             <a href="#" class="social-circle" aria-label="LinkedIn">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
                 <rect x="2" y="9" width="4" height="12"></rect>
                 <circle cx="4" cy="4" r="2"></circle>
               </svg>
             </a>
             <a href="#" class="social-circle" aria-label="YouTube">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path
-                  d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.42a2.78 2.78 0 0 0-1.94 2C1 8.11 1 12 1 12s0 3.89.46 5.58a2.78 2.78 0 0 0 1.94 2C5.12 20 12 20 12 20s6.88 0 8.6-.42a2.78 2.78 0 0 0 1.94-2C23 15.89 23 12 23 12s0-3.89-.46-5.58z">
-                </path>
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.42a2.78 2.78 0 0 0-1.94 2C1 8.11 1 12 1 12s0 3.89.46 5.58a2.78 2.78 0 0 0 1.94 2C5.12 20 12 20 12 20s6.88 0 8.6-.42a2.78 2.78 0 0 0 1.94-2C23 15.89 23 12 23 12s0-3.89-.46-5.58z"></path>
                 <polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"></polygon>
               </svg>
             </a>
             <a href="#" class="social-circle" aria-label="Facebook">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
               </svg>
             </a>
             <a href="#" class="social-circle" aria-label="Instagram">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
                 <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
                 <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
@@ -268,15 +277,15 @@
 
       <!-- Legal & Associates -->
       <div class="footer-col legal-col">
-        <h3>Temas Legales</h3>
+        <h3>{{ 'home.footer.legal' | translate }}</h3>
         <ul class="footer-links">
-          <li><a href="#">Política de privacidad</a></li>
-          <li><a href="#">Aviso Legal</a></li>
-          <li><a href="#">Política de Devoluciones</a></li>
+          <li><a href="#">{{ 'home.footer.privacy' | translate }}</a></li>
+          <li><a href="#">{{ 'home.footer.legalNotice' | translate }}</a></li>
+          <li><a href="#">{{ 'home.footer.refund' | translate }}</a></li>
         </ul>
 
         <div class="associates-section">
-          <p class="section-label">Compañías asociadas:</p>
+          <p class="section-label">{{ 'home.footer.partners' | translate }}</p>
           <div class="associate-logos">
             <div class="partner-logo">
               <img src="/assets/img/logos/vueling.png" alt="Vueling">
@@ -291,7 +300,7 @@
         </div>
 
         <div class="payments-section">
-          <p class="section-label">Métodos de pago:</p>
+          <p class="section-label">{{ 'home.footer.payment' | translate }}</p>
           <div class="payment-icons">
             <div class="payment-icon" title="Visa">
               <img src="/assets/img/logos/visa.png" alt="Visa">
@@ -305,7 +314,7 @@
 
       <!-- Contact -->
       <div class="footer-col contact-col">
-        <h3>Contacta con nosotros:</h3>
+        <h3>{{ 'home.footer.contact' | translate }}</h3>
         <ul class="contact-data">
           <li>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="entry-icon">
@@ -316,9 +325,7 @@
           </li>
           <li>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="entry-icon">
-              <path
-                d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z">
-              </path>
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
             </svg>
             <span>(+34) 612 542 515</span>
           </li>
@@ -334,10 +341,7 @@
               <circle cx="12" cy="12" r="10"></circle>
               <polyline points="12 6 12 12 16 14"></polyline>
             </svg>
-            <div class="hours">
-              Lunes a jueves de 08:00 a 18:00<br>
-              Viernes de 08:00 a 14:30
-            </div>
+            <div class="hours" style="white-space: pre-line">{{ 'home.footer.hours' | translate }}</div>
           </li>
         </ul>
       </div>
@@ -345,7 +349,7 @@
 
     <div class="footer-bottom">
       <div class="divider"></div>
-      <p class="copyright">“Construyendo recuerdos y aventuras inolvidables”</p>
+      <p class="copyright">{{ 'home.footer.copyright' | translate }}</p>
     </div>
   </footer>
 </main>

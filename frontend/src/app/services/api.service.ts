@@ -20,4 +20,16 @@ export class ApiService {
   getPlans(): Observable<Plan[]> {
     return this.http.get<Plan[]>(`${this.apiUrl}/plans`);
   }
+
+  getDestinations(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/destinations`);
+  }
+
+  deleteService(id: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/services/${id}`);
+  }
+
+  deleteDestination(id: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/destinations/${id}`);
+  }
 }

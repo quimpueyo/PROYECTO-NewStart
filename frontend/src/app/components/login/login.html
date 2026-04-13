@@ -1,11 +1,13 @@
+<app-navbar></app-navbar>
+
 <div class="auth-wrapper">
   <div class="auth-container split">
     <!-- Image Side -->
     <div class="auth-image">
       <div class="overlay"></div>
       <div class="image-content">
-        <h2>Un nuevo comienzo te espera.</h2>
-        <p>Inicia sesión para gestionar tus planes de viaje y servicios personalizados.</p>
+        <h2>{{ 'login.headline' | translate }}</h2>
+        <p>{{ 'login.subtitle' | translate }}</p>
       </div>
     </div>
 
@@ -13,7 +15,6 @@
     <div class="auth-form-side">
       <div class="form-header">
         <div class="logo-mark" style="margin: 0 auto 15px;">
-          <!-- Exact Replica SVG: Original Colors (Black, Steel Blue, White) -->
           <svg width="45" height="45" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
             <circle cx="50" cy="50" r="48" fill="#000000"/>
             <circle cx="50" cy="50" r="32" fill="#4a6fa5"/>
@@ -24,8 +25,8 @@
             </g>
           </svg>
         </div>
-        <h1>Bienvenido</h1>
-        <p>Por favor, introduce tus datos para entrar</p>
+        <h1>{{ 'login.welcome' | translate }}</h1>
+        <p>{{ 'login.enterDetails' | translate }}</p>
       </div>
 
       <form (ngSubmit)="onSubmit()" class="login-form">
@@ -38,10 +39,10 @@
         </div>
 
         <div class="form-group">
-          <label>Contraseña</label>
+          <label>{{ 'login.password' | translate }}</label>
           <div class="input-wrapper">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-            <input type="password" name="password" [(ngModel)]="credentials.password" placeholder="Tu contraseña" required>
+            <input type="password" name="password" [(ngModel)]="credentials.password" [placeholder]="'login.passwordPlaceholder' | translate" required>
           </div>
         </div>
 
@@ -49,10 +50,10 @@
           {{ error }}
         </div>
 
-        <button type="submit" class="btn-auth">Entrar</button>
+        <button type="submit" class="btn-auth">{{ 'login.submit' | translate }}</button>
 
         <p class="switch-auth">
-          ¿No tienes cuenta? <a routerLink="/register">Regístrate gratis</a>
+          {{ 'login.noAccount' | translate }} <a routerLink="/register">{{ 'login.register' | translate }}</a>
         </p>
       </form>
     </div>

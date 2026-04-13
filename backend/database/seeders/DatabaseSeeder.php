@@ -20,12 +20,15 @@ class DatabaseSeeder extends Seeder
         $this->call([
             PlanSeeder::class,
             ServiceSeeder::class,
+            DestinationSeeder::class,
         ]);
 
         User::factory()->create([
+            'username' => 'admin_user',
             'name' => 'Admin User',
             'email' => 'admin@newstart.com',
             'password' => bcrypt('password'),
+            'role' => 'admin',
             'plan_id' => 1,
         ]);
     }
